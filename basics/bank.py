@@ -1,1 +1,76 @@
+class BankAccount:
+  def __init__(self, initial_balance=0):
+    self.balance = initial_balance
+    self.transactions = []
+    print("Welcome to the machine")
 
+  def deposit(self):
+    try:
+      amount = float(input("Enter amount to be deposited: "))
+
+      if amount <= 0:
+        print("Amount must be positive.")
+        return
+
+      self.balance += amount
+      self.transactions.append(f"Deposited: +{amount:.2f}")
+      print(f"Amount deposited: {amount:.2f}")
+    except ValueError:
+      print("Invalid input. Please enter a valid amount.")
+
+  def withdraw(self):
+    try:
+      amount = float(input("Enter amount to be withdrawn: "))
+
+      if amount <= 0:
+        print("Amount must be positive")
+      elif self.balance >= amount:
+        self.balance -= amount
+        self.transactions.append(f"Withdrew: -{amount:.2f}")
+        print(f"You have withdrawn: {amount:.2f}")
+      else:
+        print("\nInsufficient balance")
+    except ValueError:
+      print("Please enter a valid number")
+
+  def display(self):
+    print(f"Available balance: {self.balance:.2f}")
+
+  def show_history(self):
+    if not self.transactions:
+      print("No transactions yet")
+    else:
+      for transaction in self.transactions:
+        print(transaction)
+
+def main():
+  account = BankAccount()
+
+  while True:
+    print("""
+===== BANK ACCOUNT =====
+1. Deposit
+2. Withdraw
+3. Display balance
+4. Transaction history
+5. Exit
+""")
+
+    choice = input("Choose an option: ")
+
+    if choice == "1":
+      account.deposit()
+    elif choice == "2":
+      account.withdraw()
+    elif choice == "3":
+      account.display()
+    elif choice == "4":
+      account.show_history()
+    elif choice == "5":
+      print("Thank you for using our bank!")
+      break
+    else:
+      print("Invalid option, try again.")
+
+if __name__ == "__main__":
+  main()
